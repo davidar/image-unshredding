@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 from __future__ import division
 
@@ -36,5 +36,4 @@ score = 0
 for col in range(w - 1):
 	score += compare(col, col + 1)
 
-print score
-
+print(score)

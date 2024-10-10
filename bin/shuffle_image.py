@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 from __future__ import division
 
@@ -22,7 +22,7 @@ def copyColumn(src, dst):
 	for row in range(h):
 		output_data[row * w + dst] = data[row * w + src]
 
-shuffled_cols = range(w)
+shuffled_cols = list(range(w))
 random.shuffle(shuffled_cols)
 
 for col in range(w):
