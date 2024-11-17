@@ -2,14 +2,14 @@ IMAGES = abstract-light-painting.png alaska-railroad.png blue-hour-paris.png \
 	lower-kananaskis-lake.png marlet2-radio-board.png nikos-cat.png \
 	pizza-food-wallpaper.png the-enchanted-garden.png tokyo-skytree-aerial.png
 
-build: LKH-2.0.7/LKH bin/compute_scores shuffled_images build_message
+build: bin/compute_scores shuffled_images build_message
 
 reconstruct: $(foreach img,$(IMAGES),$(patsubst %,images/reconstructed/%,$(img))) reconstruct_message
 
 nayuki: $(foreach img,$(IMAGES),$(patsubst %,images/nayuki/%,$(img)))
 
 clean:
-	rm -rf images/*/* tsp/*/* LKH-2.0.7 nayuki/*.class bin/compute_scores
+	rm -rf images/*/* tsp/*/* nayuki/*.class bin/compute_scores
 
 original_images: $(foreach img,$(IMAGES),$(patsubst %,images/original/%,$(img)))
 
@@ -27,16 +27,10 @@ reconstruct_message:
 .SECONDARY: # Retain all intermediate files
 
 
-LKH-2.0.7/Makefile:
-	curl -L http://webhotel4.ruc.dk/~keld/research/LKH/LKH-2.0.7.tgz | tar zxf -
-
-LKH-2.0.7/LKH: LKH-2.0.7/Makefile
-	$(MAKE) -C LKH-2.0.7
-
 tsp/instances/%.tsp: images/shuffled/%.png bin/compute_scores
 	bin/compute_scores "$<" > "$@"
 
-tsp/tours/%.tour: tsp/instances/%.tsp LKH-2.0.7/LKH bin/lkh.sh
+tsp/tours/%.tour: tsp/instances/%.tsp bin/lkh.sh
 	bin/lkh.sh "$<" "$@"
 
 images/original/%.png:
